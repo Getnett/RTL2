@@ -1,24 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "./App.css";
+// import Login from "./components/Login/Login";
+// import Users from "./components/Users/Users";
+// import Greeting from "./components/Greeting/Greeting";
+import TimerComponent from "./components/Timer/TimerComponent";
+// import StateHook from "./hooks/State";
 
+const queryClient = new QueryClient();
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <QueryClientProvider client={queryClient}>
+        <h1>Learning core react concepts and Testing</h1>
+        {/* <Login /> */}
+        {/* <Users /> */}
+        {/* <Greeting /> */}
+        <TimerComponent />
+      </QueryClientProvider>
     </div>
   );
 }
