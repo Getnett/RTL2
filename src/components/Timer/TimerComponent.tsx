@@ -9,7 +9,7 @@ const TimerComponent = () => {
   const startTimer = () => {
     if (!intervalId) {
       intervalId = setInterval(() => {
-        setTick(tick + 1);
+        setTick((prev) => prev + 1);
       }, 1000);
     }
   };
