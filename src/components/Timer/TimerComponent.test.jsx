@@ -1,15 +1,15 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import TimerComponent from "./TimerComponent";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 
 beforeEach(() => {
   jest.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
+  // jest.runOnlyPendingTimers();
+  // jest.useRealTimers();
+  jest.clearAllTimers();
 });
 describe("Testing TimerComponent", () => {
   it("renders component correctly", () => {
@@ -28,23 +28,45 @@ describe("Testing TimerComponent", () => {
   });
 
   it("displays correctly the timer", async () => {
-    // 1)
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-
     render(<TimerComponent />);
     const alert = screen.getByRole("alert");
     const startBtn = screen.getByRole("button", { name: "Start Timer" });
-    // const stopBtn = screen.getByRole("button", { name: "Stop Timer" });
-    await user.click(startBtn);
 
-    // 2)
+    await user.click(startBtn);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
 
     expect(alert).toHaveTextContent("1");
-    // expect(startBtn).toBeInTheDocument();
-    // expect(stopBtn).toBeInTheDocument();
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(alert).toHaveTextContent("2");
+  });
+
+  it("stops timer correctly", async () => {
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+
+    render(<TimerComponent />);
+
+    const alert = screen.getByRole("alert");
+    const startBtn = screen.getByRole("button", { name: "Start Timer" });
+    const stopBtn = screen.getByRole("button", { name: "Stop Timer" });
+
+    await user.click(startBtn);
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(alert).toHaveTextContent("1");
+
+    await user.click(stopBtn);
+
+    expect(alert).toHaveTextContent("0");
   });
 });
