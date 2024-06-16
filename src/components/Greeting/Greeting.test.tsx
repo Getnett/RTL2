@@ -7,7 +7,7 @@ import Greeting from "./Greeting";
 import userEvent from "@testing-library/user-event";
 
 describe("Testing Greeting component", () => {
-  it("renders Greeting correctly", () => {
+  it("renders Greeting component correctly", () => {
     render(<Greeting />);
   });
 
