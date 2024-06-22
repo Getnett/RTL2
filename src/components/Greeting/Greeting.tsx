@@ -4,8 +4,18 @@ import { useState } from "react";
 const Greeting = () => {
   const [showMessage, setShowMessage] = useState(false);
 
+  const handleToggle = () => {
+    setShowMessage((prev) => !prev);
+  };
+
   return (
-    <Box py="3rem" px="4rem" display="flex" flexDirection="column">
+    <Box
+      data-testid="wrapper"
+      py="3rem"
+      px="4rem"
+      display="flex"
+      flexDirection="column"
+    >
       {showMessage && <Alert sx={{ color: "green" }}>Hi,Welcome!</Alert>}
       <Button
         sx={{
@@ -14,7 +24,7 @@ const Greeting = () => {
           },
           textTransform: "capitalize",
         }}
-        onClick={() => setShowMessage((prev) => !prev)}
+        onClick={handleToggle}
       >
         Toggle Greeting
       </Button>

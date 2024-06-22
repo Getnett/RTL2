@@ -1,4 +1,10 @@
-import { render, screen, act } from "@testing-library/react";
+import {
+  render,
+  screen,
+  act,
+  waitFor,
+  prettyDOM,
+} from "@testing-library/react";
 import TimerComponent from "./TimerComponent";
 import userEvent from "@testing-library/user-event";
 
@@ -48,11 +54,11 @@ describe("Testing TimerComponent", () => {
     expect(alert).toHaveTextContent("2");
   });
 
+  // TODO: check  why this test is not passing
   it("stops timer correctly", async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
 
-    render(<TimerComponent />);
-
+    const res = render(<TimerComponent />);
     const alert = screen.getByRole("alert");
     const startBtn = screen.getByRole("button", { name: "Start Timer" });
     const stopBtn = screen.getByRole("button", { name: "Stop Timer" });
@@ -63,10 +69,11 @@ describe("Testing TimerComponent", () => {
       jest.advanceTimersByTime(1000);
     });
 
+    console.log("container", prettyDOM(res.container.firstChild));
     expect(alert).toHaveTextContent("1");
 
+    // rest the state
     await user.click(stopBtn);
-
     expect(alert).toHaveTextContent("0");
   });
 });

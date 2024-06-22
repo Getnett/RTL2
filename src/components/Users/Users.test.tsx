@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, act, waitFor } from "@testing-library/react";
 import Users from "./Users";
 
 const server = setupServer(
@@ -69,7 +69,9 @@ describe("Test cases for Users component", () => {
       </QueryClientProvider>
     );
 
-    const message = await screen.findByTestId("error");
-    expect(message).toBeInTheDocument();
+    await waitFor(async () => {
+      const message = await screen.findByTestId("error");
+      expect(message).toBeInTheDocument();
+    });
   });
 });
