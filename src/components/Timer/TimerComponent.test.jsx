@@ -1,10 +1,4 @@
-import {
-  render,
-  screen,
-  act,
-  waitFor,
-  prettyDOM,
-} from "@testing-library/react";
+import { render, screen, act, prettyDOM } from "@testing-library/react";
 import TimerComponent from "./TimerComponent";
 import userEvent from "@testing-library/user-event";
 
@@ -13,9 +7,9 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  // jest.runOnlyPendingTimers();
-  // jest.useRealTimers();
-  jest.clearAllTimers();
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+  // jest.clearAllTimers();
 });
 describe("Testing TimerComponent", () => {
   it("renders component correctly", () => {
